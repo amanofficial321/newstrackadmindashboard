@@ -48,8 +48,14 @@ const ViewNews = () => {
             className="articleContainer__titleContent"
             dangerouslySetInnerHTML={{ __html: item.title }}
           ></p>
-
-          <img src={`http://174.138.101.222:8080` + item.image} />
+          {item.image.includes("http://174.138.101.222") ? (
+            <img src={item.image} style={{ maxWidth: "100%" }} />
+          ) : (
+            <img
+              style={{ maxWidth: "100%" }}
+              src={`http://174.138.101.222:8080` + item.image}
+            />
+          )}
 
           <h5 className="articleContainer__titleHeading">Summary</h5>
           <p
@@ -60,6 +66,7 @@ const ViewNews = () => {
           <h5 className="articleContainer__titleHeading">Description</h5>
           <p
             className="articleContainer__titleContent"
+            style={{ fontFamily: "bhaskar" }}
             dangerouslySetInnerHTML={{ __html: item.body }}
           ></p>
         </div>

@@ -4,7 +4,15 @@ import { Viewer, Worker, SpecialZoomLevel } from "@react-pdf-viewer/core";
 import "@react-pdf-viewer/default-layout/lib/styles/index.css";
 import axios from "axios";
 import { useLocation } from "react-router-dom";
-import { CircularProgress } from "@mui/material";
+import {
+  Button,
+  CircularProgress,
+  FormControl,
+  InputLabel,
+  MenuItem,
+  Select,
+} from "@mui/material";
+import categories from "../Masters/Categories";
 
 const EpaperPreview = () => {
   const location = useLocation();
@@ -18,6 +26,21 @@ const EpaperPreview = () => {
   const [myHeight, setMyHeight] = useState(0);
   const zoom = useRef(0);
   const [button, setButton] = useState(false);
+
+  const extractFontFamilyName = (fontName) => {
+    if (fontName == "Wingdings-Regular") {
+      return "Bhaskar";
+    }
+    const pattern = /^([^\d-]+)/;
+    const match = fontName.match(pattern);
+    // console.log(match);
+
+    if (match) {
+      return match[1];
+    } else {
+      return "";
+    }
+  };
 
   {
     let reader = new FileReader();
@@ -41,7 +64,7 @@ const EpaperPreview = () => {
   };
 
   const handleDocumentLoad = (e: DocumentLoadEvent) => {
-    console.log(`File Rendered Successfully`);
+    // console.log(`File Rendered Successfully`);
     var element = document.querySelector(".rpv-core__page-layer--single");
     var rect = element.getBoundingClientRect();
     // console.log(rect);
@@ -57,9 +80,16 @@ const EpaperPreview = () => {
   const endX = useRef(null);
   const endY = useRef(null);
 
+  const scrollbar = useRef(0);
+
   const handleMouseDown = (event) => {
     const { clientX, clientY } = event;
-    console.log(event.target.offsetParent.offsetLeft);
+    // console.log(event.target.offsetParent.offsetLeft);
+    scrollbar.current =
+      (document.querySelector(".pdf-container").offsetWidth -
+        document.querySelector(".rpv-core__inner-page").offsetWidth) /
+      2;
+    console.log(scrollbar.current);
     setOffsetX(event.target.offsetParent.offsetLeft);
     if (button !== true) {
       endX.current = null;
@@ -89,9 +119,9 @@ const EpaperPreview = () => {
       // console.log("x-y start", startX - offsetX, startY - offsetY);
       // console.log("x-y end", clientX - offsetX, clientY - offsetY);
       setFinalCo({
-        minX: (startX.current - offsetX) / zoom.current,
+        minX: (startX.current - offsetX - scrollbar.current) / zoom.current,
         minY: (startY.current - offsetY) / zoom.current,
-        maxX: (clientX - offsetX) / zoom.current,
+        maxX: (clientX - offsetX - scrollbar.current) / zoom.current,
         maxY: (clientY - offsetY) / zoom.current,
       });
       if (startX.current !== clientX && startY.current !== clientY) {
@@ -102,6 +132,8 @@ const EpaperPreview = () => {
     }
   };
   const [extractedData, setExtractedData] = useState(null);
+  const [body, setBody] = useState(null);
+  const [image, setImage] = useState("");
 
   const fetchData = async (e) => {
     e.stopPropagation();
@@ -113,11 +145,10 @@ const EpaperPreview = () => {
     setButton(false);
     var formData = new FormData();
     console.log(finalCo);
-    console.log(page.current);
     formData.append("pdf", data);
     try {
       const response = await axios.post(
-        `http://174.138.101.222:5000/api/extract?x_min=${Math.round(
+        `http://174.138.101.222:5000/api/extractdata_withfont2?x_min=${Math.round(
           finalCo.minX
         )}&x_max=${Math.round(finalCo.maxX)}&y_min=${Math.round(
           finalCo.minY
@@ -129,15 +160,22 @@ const EpaperPreview = () => {
           },
         }
       );
-
-      console.log(response.data);
+      let resData = response.data.data;
+      let bodyString = "";
+      // console.log(resData);
+      for (let i = 0; i < resData.length; i++) {
+        bodyString = bodyString + resData[i].paragraph + "\n";
+        // console.log(bodyString);
+      }
+      setBody(bodyString);
       setExtractedData(response.data);
+      setImage(`http://174.138.101.222:5000${response.data.image_url}`);
     } catch (error) {
       console.log(error);
-      alert();
+      alert("Error Occured");
     }
   };
-
+  // console.log(body);
   const getSelectionStyles = () => {
     if (startX.current && startY.current && endX.current && endY.current) {
       const left = Math.min(startX.current, endX.current);
@@ -160,7 +198,34 @@ const EpaperPreview = () => {
     }
   };
 
-  const font = "bhaskar";
+  const [category, setCategory] = useState("");
+
+  ///////////////////////////////// To send in Draft ///////////////////////////////////////
+
+  const draftHandeler = () => {
+    let formdata = new FormData();
+
+    formdata.append("category", category);
+    formdata.append("body", body);
+    formdata.append("image", image);
+
+    const superAdminToken = localStorage?.getItem("superAdminToken");
+    const superAdminId = localStorage?.getItem("superAdminId");
+
+    console.log(formdata);
+    axios({
+      method: "post",
+      url: `http://174.138.101.222:8080/${superAdminId}/draft-article`,
+      data: formdata,
+      headers: {
+        "content-type": "multipart/form-data",
+        Authorization: "Bearer " + superAdminToken,
+      },
+    })
+      .then((response) => alert(response.data.message))
+      .catch((error) => console.log(error));
+  };
+  ///////////////////////////////// To send draft request ///////////////////////////////////////
 
   return (
     <div className="home-container">
@@ -194,36 +259,57 @@ const EpaperPreview = () => {
       </div>
 
       <div style={getSelectionStyles()}></div>
-      {/* <div className="preview-div">
-        {extractedData ? (
-          extractedData.output_content2.map((data) => {
-            return (
-              <p className="para" style={{ fontFamily: font }}>
-                {data[1]}
-              </p>
-            );
-          })
-        ) : (
-          <CircularProgress className="circularProgress" color="inherit" />
-        )}
-        {extractedData && (
-          <img src={`http://174.138.101.222:5000${extractedData?.image}`} />
-        )}
-      </div> */}
+
       <div className="preview-div">
         {extractedData ? (
           <>
-            {extractedData.output_content2.map((data) => (
-              <p className="para" style={{ fontFamily: font }}>
-                {data[1]}
-              </p>
+            <FormControl fullWidth>
+              <InputLabel id="category">Categories</InputLabel>
+              <Select
+                labelId="category"
+                id="category"
+                value={category}
+                label="Categories"
+                onChange={(e) => {
+                  setCategory(e.target.value);
+                }}
+              >
+                {categories.map((item, index) => {
+                  return (
+                    <MenuItem value={item} key={index}>
+                      {item}
+                    </MenuItem>
+                  );
+                })}
+              </Select>
+            </FormControl>
+
+            {extractedData.data.map((data) => (
+              <>
+                <p
+                  className="para"
+                  style={{ fontFamily: extractFontFamilyName(data.font) }}
+                >
+                  {data.paragraph}
+                </p>
+              </>
             ))}
-            {/* <img src={`http://174.138.101.222:5000${extractedData?.image}`} /> */}
             <img
-              src={`http://174.138.101.222:5000${
-                extractedData?.image
-              }?timestamp=${Date.now()}`}
+              src={`http://174.138.101.222:5000${extractedData.image_url}`}
             />
+            <Button
+              sx={{
+                marginTop: "10px",
+                width: "150px",
+                position: "relative",
+                left: "50%",
+                transform: "translateX(-50%)",
+              }}
+              variant="contained"
+              onClick={draftHandeler}
+            >
+              Send to Draft
+            </Button>
           </>
         ) : (
           <CircularProgress className="circularProgress" color="inherit" />

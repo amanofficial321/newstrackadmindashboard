@@ -9,19 +9,22 @@ import FormControl from "@mui/material/FormControl";
 import NativeSelect from "@mui/material/NativeSelect";
 import axios from "axios";
 import { MenuItem } from "@mui/material";
+import { useNavigate } from "react-router-dom";
 
 const Vendorinfromation = () => {
   const [step, setStep] = useState(1);
 
+  const navigate = useNavigate();
+
   const goToNextStep = (e) => {
     e.stopPropagation();
     setStep(step + 1);
-    console.log(step);
+    // console.log(values);
   };
 
   const goToPreviousStep = () => {
     setStep(step - 1);
-    console.log(step);
+    // console.log(values);
   };
 
   const initialValues = {
@@ -96,31 +99,38 @@ const Vendorinfromation = () => {
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
-
-    setValues({
-      ...values,
-      [name]: value,
-    });
+    if (e.target.type === "file") {
+      setValues({
+        ...values,
+        [name]: e.target.files[0],
+      });
+    } else {
+      setValues({
+        ...values,
+        [name]: value,
+      });
+    }
   };
-  var handleSubmit = (e) => {
+
+  var handleSubmit = async (e) => {
+    let formdata = new FormData();
+    for (const key in values) {
+      if (values.hasOwnProperty(key)) {
+        formdata.append(key, values[key]);
+      }
+    }
+    // console.log(formdata);
     e.preventDefault();
-    Publication_details();
-  };
-  const Publication_details = async (e) => {
-    console.log("Submit clicked");
-
     try {
       const response = await axios.post(
         "http://174.138.101.222:8080/publication-details",
-        values
+        formdata
       );
-      console.log(response.statusText);
+      alert("Vendor Created Successfully");
     } catch (error) {
       alert(error.request.response);
     }
   };
-
-  console.log(values);
 
   // Render different form screens based on the current step
   const renderFormScreen = () => {
@@ -425,14 +435,6 @@ const Vendorinfromation = () => {
                   value={values.comm_pin_code}
                   onChange={handleInputChange}
                 />
-
-                {/* <button
-                  
-                  className=" btn vendorbtn"
-                  onClick={goToNextStep}
-                >
-                  Next
-                </button> */}
                 <div onClick={goToNextStep} className=" btn vendorbtn">
                   Next Step
                 </div>
@@ -446,7 +448,6 @@ const Vendorinfromation = () => {
             <p className="vendortext">PUBLICATION DETAILS</p>
             <div className="vendorformbox">
               <div className="vendorformbox1">
-                {/* <FormControl fullWidth> */}
                 <TextField
                   id="standard-basic"
                   label="PUBLICATION NAME *"
@@ -483,17 +484,15 @@ const Vendorinfromation = () => {
                   value={values.RNI_Regn_date}
                   onChange={handleInputChange}
                 />
-                {/* </FormControl> */}
+
                 <button
                   className="btn vendorpreviousbtn"
-                  // onClick={goToPreviousStep}
                   onClick={(e) => goToPreviousStep(e)}
                 >
                   Previous
                 </button>
               </div>
               <div className="vendorformbox1">
-                {/* <FormControl fullWidth> */}
                 <TextField
                   id="standard-basic"
                   label="LANG OF PUBLICATION *"
@@ -510,7 +509,6 @@ const Vendorinfromation = () => {
                   <NativeSelect
                     value={values.frequency_of_publication}
                     onChange={handleInputChange}
-                    // defaultValue={"None"}
                     inputProps={{
                       name: "frequency_of_publication",
                       id: "uncontrolled-native",
@@ -536,7 +534,6 @@ const Vendorinfromation = () => {
                   value={values.RNI_No}
                   onChange={handleInputChange}
                 />
-                {/* </FormControl> */}
                 <button
                   className="btn vendorbtn"
                   onClick={(e) => goToNextStep(e)}
@@ -553,7 +550,6 @@ const Vendorinfromation = () => {
             <p className="vendortext">PUBLICATION SOCIAL</p>
             <div className="vendorformbox">
               <div className="vendorformbox1">
-                {/* <FormControl fullWidth> */}
                 <TextField
                   id="standard-basic"
                   label="PUB SOCIAL FB *"
@@ -581,7 +577,7 @@ const Vendorinfromation = () => {
                   value={values.pub_social_youtube}
                   onChange={handleInputChange}
                 />
-                {/* </FormControl> */}
+
                 <button
                   className="btn vendorpreviousbtn"
                   onClick={goToPreviousStep}
@@ -590,7 +586,6 @@ const Vendorinfromation = () => {
                 </button>
               </div>
               <div className="vendorformbox1">
-                {/* <FormControl fullWidth> */}
                 <TextField
                   id="standard-basic"
                   label="PUB SOCIAL TW *"
@@ -609,7 +604,7 @@ const Vendorinfromation = () => {
                   value={values.pub_social_instagram}
                   onChange={handleInputChange}
                 />
-                {/* </FormControl> */}
+
                 <button className="btn vendorbtn" onClick={goToNextStep}>
                   Next
                 </button>
@@ -623,7 +618,6 @@ const Vendorinfromation = () => {
             <p className="vendortext">PUBLISHER SITE</p>
             <div className="vendorformbox">
               <div className="vendorformbox1">
-                {/* <FormControl fullWidth> */}
                 <TextField
                   id="standard-basic"
                   label="DOMAIN NAME *"
@@ -633,15 +627,16 @@ const Vendorinfromation = () => {
                   value={values.domain_name}
                   onChange={handleInputChange}
                 />
-                <TextField
+                {/* <TextField
                   id="standard-basic"
                   label="LOGO SMALL *"
+                  type="file"
                   variant="standard"
                   className="vendorinput"
                   name="logo_small"
-                  value={values.logo_small}
+                  // value={values.logo_small}
                   onChange={handleInputChange}
-                />
+                /> */}
                 <TextField
                   id="standard-basic"
                   label="MOBILE *"
@@ -651,6 +646,18 @@ const Vendorinfromation = () => {
                   value={values.publisher_site_mobile}
                   onChange={handleInputChange}
                 />
+                <div className="mb-3">
+                  <label htmlFor="formFile" className="form-label">
+                    Logo Small
+                  </label>
+                  <input
+                    className="form-control"
+                    type="file"
+                    id="formFile"
+                    name="logo_small"
+                    onChange={handleInputChange}
+                  />
+                </div>
 
                 <div
                   onClick={goToPreviousStep}
@@ -660,7 +667,7 @@ const Vendorinfromation = () => {
                 </div>
               </div>
               <div className="vendorformbox1">
-                <TextField
+                {/* <TextField
                   id="standard-basic"
                   label="LOGO LARGE *"
                   variant="standard"
@@ -668,7 +675,7 @@ const Vendorinfromation = () => {
                   name="logo_large"
                   value={values.logo_large}
                   onChange={handleInputChange}
-                />
+                /> */}
                 <TextField
                   id="standard-basic"
                   label="SITE DISPLAY CONTACT *"
@@ -687,11 +694,19 @@ const Vendorinfromation = () => {
                   value={values.publisher_site_email}
                   onChange={handleInputChange}
                 />
-                {/* </FormControl> */}
+                <div className="mb-3">
+                  <label htmlFor="formFile" className="form-label">
+                    Logo Large
+                  </label>
+                  <input
+                    className="form-control"
+                    type="file"
+                    id="formFile"
+                    name="logo_large"
+                    onChange={handleInputChange}
+                  />
+                </div>
 
-                {/* <button className="btn  vendorbtn" onClick={goToNextStep}>
-                  Next
-                </button> */}
                 <div onClick={goToNextStep} className="btn vendorbtn">
                   Next Step
                 </div>
@@ -705,7 +720,6 @@ const Vendorinfromation = () => {
             <p className="vendortext">FINANCE</p>
             <div className="vendorformbox">
               <div className="vendorformbox1">
-                {/* <FormControl fullWidth> */}
                 <TextField
                   id="standard-basic"
                   label="PAN NO  *"
@@ -933,11 +947,21 @@ const Vendorinfromation = () => {
         <div className="vendorbox2">
           <div className="vendorheader">
             <p className="vendorheading">
-              {" "}
-              <ArrowBackIcon /> VENDOR REGISTRATION
+              <button
+                onClick={() => navigate(-1)}
+                className="pointer"
+                style={{
+                  backgroundColor: "transparent",
+                  border: "transparent",
+                  color: "white",
+                }}
+              >
+                <ArrowBackIcon />
+              </button>
+              VENDOR REGISTRATION
             </p>
           </div>
-          <div className=" buttongroup">
+          <div className=" buttongroup mt-1 ">
             <div className="btn-group btn-group-toggle" data-toggle="buttons">
               <label
                 className="btn btn-secondary active btn1"

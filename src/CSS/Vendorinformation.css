@@ -60,7 +60,8 @@
   justify-content: center;
   gap: 20px;
   position: relative;
-  top: 12vh;
+  /* top: 12vh; */
+  margin-top: 2%;
 }
 .vendorformbox1 {
   width: 40%;

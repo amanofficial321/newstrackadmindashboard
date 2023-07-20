@@ -1,10 +1,10 @@
 import React, { useState } from "react";
 import "../CSS/NewspaperAgencyLogin.scss";
-// import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 
 const NewspaperAgencyLogin = () => {
-  // const navigate = useNavigate();
+  const navigate = useNavigate();
 
   const [email, setEmail] = useState("");
   const handleEmailInput = (e) => {
@@ -34,11 +34,11 @@ const NewspaperAgencyLogin = () => {
         response.data.data.token
       );
 
-      // navigate("/dashboard");
+      navigate("/dashboard");
       setEmail("");
       setPassword("");
     } catch (error) {
-      console.log(error);
+      alert(JSON.parse(error.request.response).msg);
     }
   };
 

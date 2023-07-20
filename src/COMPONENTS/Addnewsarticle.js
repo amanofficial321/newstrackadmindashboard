@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import "../CSS/Addnewsarticle.scss";
+import "../CSS/Addnewsarticle.module.scss";
 import Navbar from "./Navbar";
 import { HiOutlineArrowSmallLeft } from "react-icons/hi2";
 import InputLabel from "@mui/material/InputLabel";
@@ -8,18 +8,22 @@ import FormControl from "@mui/material/FormControl";
 import TextField from "@mui/material/TextField";
 import Select from "@mui/material/Select";
 import { CKEditor } from "@ckeditor/ckeditor5-react";
-import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
+// import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
+// import ClassicEditor from "./Ckeditor";
+import Editor from "ckeditor5-custom-build/build/ckeditor";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import Checkbox from "@mui/material/Checkbox";
 import Button from "@mui/material/Button";
 import axios from "axios";
+import categories from "../Masters/Categories";
 
 const Addnewsarticle = () => {
   ///////////////////////////////// To take user input ///////////////////////////////////////
+
   let initialValues = {
     category: "",
     title: "",
-    sub_heading: "",
+    sub_heading: "Sub Heading",
     short_details: "",
     body: "",
     image: "",
@@ -97,7 +101,7 @@ const Addnewsarticle = () => {
       .then((response) => alert(response.data.message))
       .catch((error) => console.log(error));
   };
-  ///////////////////////////////// To send axios request ///////////////////////////////////////
+  ///////////////////////////////// To send draft request ///////////////////////////////////////
 
   return (
     <>
@@ -111,7 +115,9 @@ const Addnewsarticle = () => {
         </h1>
 
         <FormControl className="FormControl">
-          <InputLabel id="demo-simple-select-helper-label">CATEGORY</InputLabel>
+          <InputLabel id="demo-simple-select-helper-label">
+            "Category"
+          </InputLabel>
           <Select
             labelId="demo-simple-select-helper-label"
             id="demo-simple-select-helper"
@@ -120,18 +126,16 @@ const Addnewsarticle = () => {
             value={values.category}
             onChange={handleInputChange}
           >
-            <MenuItem value={"Healthcare"}>Healthcare</MenuItem>
-            <MenuItem value={"Politics"}>Politics</MenuItem>
-            <MenuItem value={"Education"}>Education</MenuItem>
-            <MenuItem value={"Sports"}>Sports</MenuItem>
-            <MenuItem value={"International"}>International</MenuItem>
+            {categories.map((item) => {
+              return <MenuItem value={item}>{item}</MenuItem>;
+            })}
           </Select>
         </FormControl>
 
         <div className="ckeditor FormControl">
           <p className="cktitle ">Title *</p>
           <CKEditor
-            editor={ClassicEditor}
+            editor={Editor}
             data="<p>Hello from CKEditor 5!</p>"
             name="title"
             value={values.title}
@@ -144,7 +148,7 @@ const Addnewsarticle = () => {
             }}
           />
         </div>
-        <div className="ckeditor">
+        {/* <div className="ckeditor">
           <p className="cktitle">Sub Heading *</p>
           <CKEditor
             editor={ClassicEditor}
@@ -159,11 +163,11 @@ const Addnewsarticle = () => {
               });
             }}
           />
-        </div>
+        </div> */}
         <div className="ckeditor">
           <p className="cktitle">Summary / Short Details *</p>
           <CKEditor
-            editor={ClassicEditor}
+            editor={Editor}
             data="<p>Hello from CKEditor 5!</p>"
             name="short_details"
             value={values.short_details}
@@ -176,11 +180,11 @@ const Addnewsarticle = () => {
             }}
           />
         </div>
-        <div className="ckeditor">
+        <div className="ckeditor ckeditorBody">
           <p className="cktitle">Body *</p>
           <CKEditor
-            editor={ClassicEditor}
-            data="<p>Hello from CKEditor 5!</p>"
+            editor={Editor}
+            data={values.body}
             name="body"
             value={values.body}
             onChange={(event, editor) => {
@@ -192,12 +196,14 @@ const Addnewsarticle = () => {
             }}
           />
         </div>
+
         <TextField
           id="outlined-basic"
           variant="outlined"
           type="file"
           className="FormControl"
           label="Image"
+          // value={values.image}
           name="image"
           onChange={handleInputChange}
         />
@@ -284,6 +290,7 @@ const Addnewsarticle = () => {
           label="News Sections"
           className=" FormControl"
         />
+
         <Button
           variant="contained"
           className="FormControl "
@@ -291,6 +298,7 @@ const Addnewsarticle = () => {
         >
           Save to Drafts
         </Button>
+
         <Button
           variant="contained"
           className="FormControl "

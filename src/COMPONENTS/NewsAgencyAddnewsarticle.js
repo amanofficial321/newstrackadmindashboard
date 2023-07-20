@@ -8,7 +8,9 @@ import FormControl from "@mui/material/FormControl";
 import TextField from "@mui/material/TextField";
 import Select from "@mui/material/Select";
 import { CKEditor } from "@ckeditor/ckeditor5-react";
-import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
+// import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
+import { Editor as ClassicEditor } from "ckeditor5-custom-build/build/ckeditor";
+// import ClassicEditor from "./Ckeditor";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import Checkbox from "@mui/material/Checkbox";
 import Button from "@mui/material/Button";
@@ -118,7 +120,7 @@ const NewsAgencyAddnewsarticle = () => {
             }}
           />
         </div>
-        <div className="ckeditor">
+        {/* <div className="ckeditor">
           <p className="cktitle">Sub Heading *</p>
           <CKEditor
             editor={ClassicEditor}
@@ -133,7 +135,7 @@ const NewsAgencyAddnewsarticle = () => {
               });
             }}
           />
-        </div>
+        </div> */}
         <div className="ckeditor">
           <p className="cktitle">Summary / Short Details *</p>
           <CKEditor

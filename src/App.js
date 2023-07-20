@@ -16,6 +16,8 @@ import Template3 from "./COMPONENTS/Template3";
 import NewsAgencyNewsApproval from "./COMPONENTS/NewsAgencyNewsApproval";
 import RoleManagement from "./COMPONENTS/Role-Management";
 import EpaperPreview from "./COMPONENTS/EpaperPreview";
+import EditDraft from "./COMPONENTS/EditDraft";
+import EditArticle from "./COMPONENTS/EditArticle";
 
 const App = () => {
   return (
@@ -28,6 +30,8 @@ const App = () => {
         <Route path="/news-approval" element={<NewsApproval />} />
         <Route path="/viewNews" element={<ViewNews />} />
         <Route path="/addNewsArticle" element={<Addnewsarticle />} />
+        <Route path="/editDraft" element={<EditDraft />} />
+        <Route path="/editArticle" element={<EditArticle />} />
         <Route path="/epaper" element={<Epaper />} />
         <Route path="/Template" element={<Template />} />
         <Route path="/Template2" element={<Template2 />} />

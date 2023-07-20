@@ -17,11 +17,6 @@ const NewsApproval = () => {
     navigate(-1);
   };
 
-  const handleEdit = (e) => {
-    e.stopPropagation();
-    alert("edit clicked");
-  };
-
   const superAdminId = localStorage.getItem("superAdminId");
   const superAdminToken = localStorage.getItem("superAdminToken");
 
@@ -329,7 +324,13 @@ const NewsApproval = () => {
                         </form>
                       ) : (
                         <div>
-                          <span className="pointer" onClick={handleEdit}>
+                          <span
+                            className="pointer"
+                            onClick={(e) => {
+                              e.stopPropagation();
+                              navigate("/editDraft", { state: item });
+                            }}
+                          >
                             <FaEdit />
                           </span>
                           <span
@@ -476,7 +477,13 @@ const NewsApproval = () => {
                         </form>
                       ) : (
                         <div>
-                          <span className="pointer" onClick={handleEdit}>
+                          <span
+                            className="pointer"
+                            onClick={(e) => {
+                              e.stopPropagation();
+                              navigate("/editArticle", { state: item });
+                            }}
+                          >
                             <FaEdit />
                           </span>
                           <span
