@@ -18,7 +18,9 @@ import RoleManagement from "./COMPONENTS/Role-Management";
 import EpaperPreview from "./COMPONENTS/EpaperPreview";
 import EditDraft from "./COMPONENTS/EditDraft";
 import EditArticle from "./COMPONENTS/EditArticle";
-
+import  Categorys from "./COMPONENTS/Categorys";
+import Tags from "./COMPONENTS/Tags";
+import  Location  from "./COMPONENTS/Location";
 const App = () => {
   return (
     <BrowserRouter>
@@ -33,6 +35,9 @@ const App = () => {
         <Route path="/editDraft" element={<EditDraft />} />
         <Route path="/editArticle" element={<EditArticle />} />
         <Route path="/epaper" element={<Epaper />} />
+        <Route path="/categorys" element={<Categorys />} />
+        <Route path="/tags" element={<Tags />} />
+        <Route path="/location" element={<Location />} />
         <Route path="/Template" element={<Template />} />
         <Route path="/Template2" element={<Template2 />} />
         <Route path="/Template3" element={<Template3 />} />

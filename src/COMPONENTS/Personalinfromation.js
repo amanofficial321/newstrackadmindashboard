@@ -1,9 +1,13 @@
-import React, { useState } from "react";
+import React, { useState,useEffect } from "react";
 import TextField from "@mui/material/TextField";
 import "../CSS/Personalinformation.css";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import Navbar from "./Navbar";
 import axios from "axios";
+import MenuItem from "@mui/material/MenuItem";
+import Select from "@mui/material/Select";
+import FormControl from "@mui/material/FormControl";
+import InputLabel from "@mui/material/InputLabel";
 
 const Personalinfromation = () => {
   const [step, setStep] = useState(1);
@@ -72,6 +76,20 @@ const Personalinfromation = () => {
   };
 
   console.log(values);
+
+  /////get api LOCATION///
+
+  const [data, setData] = useState([]);
+  useEffect(() => {
+    fetch("http://174.138.101.222:8080/getmasterlocation").then((result) => {
+      result.json().then((resp) => {
+        setData(resp);
+      });
+    });
+  }, []);
+  console.log(data);
+
+  /////
 
   // Render different form screens based on the current step
   const renderFormScreen = () => {
@@ -189,6 +207,24 @@ const Personalinfromation = () => {
               <div className="formbox1">
                 <TextField
                   id="standard-basic"
+                  label="EMAIL 1 *"
+                  name="email_1"
+                  value={values.email_1}
+                  onChange={handleInputChange}
+                  variant="standard"
+                  className="personalinput"
+                />
+                <TextField
+                  id="standard-basic"
+                  label="EMAIL 2 *"
+                  name="email_2"
+                  value={values.email_2}
+                  onChange={handleInputChange}
+                  variant="standard"
+                  className="personalinput"
+                />
+                <TextField
+                  id="standard-basic"
                   label="MOBILE 1 *"
                   name="mobile_1"
                   value={values.mobile_1}
@@ -228,42 +264,234 @@ const Personalinfromation = () => {
                 </button>
               </div>
               <div className="formbox1">
-                <TextField
-                  id="standard-basic"
-                  label="EMAIL 1 *"
-                  name="email_1"
-                  value={values.email_1}
-                  onChange={handleInputChange}
-                  variant="standard"
-                  className="personalinput"
-                />
-                <TextField
-                  id="standard-basic"
-                  label="EMAIL 2 *"
-                  name="email_2"
-                  value={values.email_2}
-                  onChange={handleInputChange}
-                  variant="standard"
-                  className="personalinput"
-                />
-                <TextField
-                  id="standard-basic"
-                  label=" CITY *"
-                  name="city"
-                  value={values.city}
-                  onChange={handleInputChange}
-                  variant="standard"
-                  className="personalinput"
-                />
-                <TextField
-                  id="standard-basic"
-                  label="STATE *"
-                  name="state"
-                  value={values.state}
-                  onChange={handleInputChange}
-                  variant="standard"
-                  className="personalinput"
-                />
+              <FormControl>
+                <InputLabel id="demo-simple-select-helper-label">
+                   COUNTRIES
+                </InputLabel>
+                <Select
+                  labelId="demo-simple-select-helper-label"
+                  id="demo-simple-select-helper"
+                  // value={age}
+                  label="CATEGORY"
+                  // onChange={handleChange}
+                >
+                  <MenuItem value="">
+                    <em>None</em>
+                  </MenuItem>
+                  {
+                    data?.data?.map((item) => (
+                    <MenuItem
+                      key={item._id}
+                      value={item.countries}
+                    >
+                      {item.countries}
+                    </MenuItem>
+                  ))
+                  }
+                 
+                </Select>
+              </FormControl>
+               
+                <FormControl>
+                <InputLabel id="demo-simple-select-helper-label">
+                  STATE
+                </InputLabel>
+                <Select
+                  labelId="demo-simple-select-helper-label"
+                  id="demo-simple-select-helper"
+                  // value={age}
+                  label="CATEGORY"
+                  // onChange={handleChange}
+                >
+                  <MenuItem value="">
+                    <em>None</em>
+                  </MenuItem>
+                  {
+                    data?.data?.map((item) => (
+                    <MenuItem
+                      key={item._id}
+                      value={item.states}
+                    >
+                      {item.states}
+                    </MenuItem>
+                  ))
+                  }
+                 
+                </Select>
+              </FormControl>
+               
+              <FormControl>
+                <InputLabel id="demo-simple-select-helper-label">
+                  CITY
+                </InputLabel>
+                <Select
+                  labelId="demo-simple-select-helper-label"
+                  id="demo-simple-select-helper"
+                  // value={age}
+                  label="CATEGORY"
+                  // onChange={handleChange}
+                >
+                  <MenuItem value="">
+                    <em>None</em>
+                  </MenuItem>
+                  {
+                    data?.data?.map((item) => (
+                    <MenuItem
+                      key={item._id}
+                      value={item.division}
+                    >
+                      {item.division}
+                    </MenuItem>
+                  ))
+                  }
+                 
+                </Select>
+              </FormControl>
+
+              <FormControl>
+                <InputLabel id="demo-simple-select-helper-label">
+                  DIVISION
+                </InputLabel>
+                <Select
+                  labelId="demo-simple-select-helper-label"
+                  id="demo-simple-select-helper"
+                  // value={age}
+                  label="CATEGORY"
+                  // onChange={handleChange}
+                >
+                  <MenuItem value="">
+                    <em>None</em>
+                  </MenuItem>
+                  {
+                    data?.data?.map((item) => (
+                    <MenuItem
+                      key={item._id}
+                      value={item.district}
+                    >
+                      {item.district}
+                    </MenuItem>
+                  ))
+                  }
+                 
+                </Select>
+              </FormControl>
+              
+              
+              <FormControl>
+                <InputLabel id="demo-simple-select-helper-label">
+                  DISTRICT 
+                </InputLabel>
+                <Select
+                  labelId="demo-simple-select-helper-label"
+                  id="demo-simple-select-helper"
+                  // value={age}
+                  label="CATEGORY"
+                  // onChange={handleChange}
+                >
+                  <MenuItem value="">
+                    <em>None</em>
+                  </MenuItem>
+                  {
+                    data?.data?.map((item) => (
+                    <MenuItem
+                      key={item._id}
+                      value={item.sub_division}
+                    >
+                      {item.sub_division}
+                    </MenuItem>
+                  ))
+                  }
+                 
+                </Select>
+              </FormControl>
+               
+               
+               
+               
+              <FormControl>
+                <InputLabel id="demo-simple-select-helper-label">
+                  SUB DIVISION 
+                </InputLabel>
+                <Select
+                  labelId="demo-simple-select-helper-label"
+                  id="demo-simple-select-helper"
+                  // value={age}
+                  label="CATEGORY"
+                  // onChange={handleChange}
+                >
+                  <MenuItem value="">
+                    <em>None</em>
+                  </MenuItem>
+                  {
+                    data?.data?.map((item) => (
+                    <MenuItem
+                      key={item._id}
+                      value={item.tahsil}
+                    >
+                      {item.tahsil}
+                    </MenuItem>
+                  ))
+                  }
+                 
+                </Select>
+              </FormControl>
+               
+              <FormControl>
+                <InputLabel id="demo-simple-select-helper-label">
+                  THASIL 
+                </InputLabel>
+                <Select
+                  labelId="demo-simple-select-helper-label"
+                  id="demo-simple-select-helper"
+                  // value={age}
+                  label="CATEGORY"
+                  // onChange={handleChange}
+                >
+                  <MenuItem value="">
+                    <em>None</em>
+                  </MenuItem>
+                  {
+                    data?.data?.map((item) => (
+                    <MenuItem
+                      key={item._id}
+                      value={item.tahsil}
+                    >
+                      {item.tahsil}
+                    </MenuItem>
+                  ))
+                  }
+                 
+                </Select>
+              </FormControl>
+               
+              <FormControl>
+                <InputLabel id="demo-simple-select-helper-label">
+                  TOWN 
+                </InputLabel>
+                <Select
+                  labelId="demo-simple-select-helper-label"
+                  id="demo-simple-select-helper"
+                  // value={age}
+                  label="CATEGORY"
+                  // onChange={handleChange}
+                >
+                  <MenuItem value="">
+                    <em>None</em>
+                  </MenuItem>
+                  {
+                    data?.data?.map((item) => (
+                    <MenuItem
+                      key={item._id}
+                      value={item.Town}
+                    >
+                      {item.Town}
+                    </MenuItem>
+                  ))
+                  }
+                 
+                </Select>
+              </FormControl>
+               
 
                 <button className="btn personalbtn" onClick={goToNextStep}>
                   Next

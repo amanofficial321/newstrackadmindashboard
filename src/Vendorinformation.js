@@ -22,7 +22,7 @@ const Vendorinfromation = () => {
       case 1:
         return (
           <div className="personalcontainer">
-            <p className="personaltext">LOGIN & NAME</p>
+            <p className="personaltext">LOGIN & NAME </p>
             <div className="formbox">
               <div className="formbox1">
                 <TextField

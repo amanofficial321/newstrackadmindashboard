@@ -180,6 +180,40 @@ const Navbar = () => {
         </div>
 
         {/* E-PAPER DROPDOWN END  */}
+
+
+        <div className="dropdown dropdowns">
+          <p
+            className=" dropdown-toggle"
+            type="button"
+            id="dropdownMenuButton"
+            data-toggle="dropdown"
+            aria-haspopup="true"
+            aria-expanded="false"
+          >
+            MASTER
+          </p>
+          <div className="dropdown-menu" aria-labelledby="dropdownMenuButton">
+            <Link to="/categorys">
+              {" "}
+              <p className="dropdown-item">Category</p>
+            </Link>
+            <Link to="/tags">
+              <p className="dropdown-item">Tags</p>
+            </Link>
+            <Link to="/location">
+              <p className="dropdown-item">Location</p>
+            </Link>
+          </div>
+        </div>
+
+
+
+
+
+
+
+
       </div>
     </>
   );

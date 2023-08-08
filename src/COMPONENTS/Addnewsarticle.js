@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import "../CSS/Addnewsarticle.module.scss";
 import Navbar from "./Navbar";
 import { HiOutlineArrowSmallLeft } from "react-icons/hi2";
@@ -102,6 +102,20 @@ const Addnewsarticle = () => {
       .catch((error) => console.log(error));
   };
   ///////////////////////////////// To send draft request ///////////////////////////////////////
+
+  /////get api tag///
+
+  const [data, setData] = useState([]);
+  useEffect(() => {
+    fetch("http://174.138.101.222:8080/getmastertag").then((result) => {
+      result.json().then((resp) => {
+        setData(resp);
+      });
+    });
+  }, []);
+  console.log(data);
+
+  /////
 
   return (
     <>
@@ -217,15 +231,28 @@ const Addnewsarticle = () => {
           value={values.url}
           onChange={handleInputChange}
         />
-        <TextField
-          id="outlined-basic"
-          label="Tags/Keywords"
-          variant="outlined"
-          className="FormControl"
-          name="tags"
-          value={values.tags}
-          onChange={handleInputChange}
-        />
+       
+        <FormControl className="FormControl">
+          <InputLabel id="demo-simple-select-helper-label">
+            Tags/Keywords
+          </InputLabel>
+          <Select
+          
+          labelId="demo-simple-select-helper-label"
+          id="demo-simple-select-helper"
+          // value={age}
+          label="CATEGORY"
+          // onChange={handleChange}
+        >
+          {data?.data?.map((item) => (
+            <MenuItem key={item._id} value={item.tag_name}>
+              {item.tag_name}
+            </MenuItem>
+          ))}
+        </Select>
+        </FormControl>
+
+       
         <FormControl className="FormControl">
           <InputLabel id="demo-simple-select-helper-label">
             News Priority

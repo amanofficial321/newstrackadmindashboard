@@ -25,6 +25,23 @@ const Epaper = () => {
   const [size, setSize] = useState({});
 
   const [loader, setLoader] = useState(false);
+  const superAdminId = localStorage.getItem("superAdminId");
+
+  /////get api categorie///
+
+  const [data, setData] = useState([]);
+  useEffect(() => {
+    fetch("http://174.138.101.222:8080/getmastercategories").then((result) => {
+      result.json().then((resp) => {
+        setData(resp);
+      });
+    });
+  }, []);
+  console.log(data);
+
+  /////
+
+
 
   const fetchPageSize = async (e) => {
     setLoader(true);
@@ -136,6 +153,16 @@ const Epaper = () => {
                   <MenuItem value="">
                     <em>None</em>
                   </MenuItem>
+                  {
+                    data?.data?.map((item) => (
+                    <MenuItem
+                      key={item._id}
+                      value={item.categories_Name_English}
+                    >
+                      {item.categories_Name_English}
+                    </MenuItem>
+                  ))
+                  }
                   <MenuItem value={10}>Ten</MenuItem>
                   <MenuItem value={20}>Twenty</MenuItem>
                   <MenuItem value={30}>Thirty</MenuItem>

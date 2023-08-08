@@ -6,7 +6,7 @@
     height: 8vh;
     font-size: 26px;
     width: 100%;
-    background-color: rgb(39, 157, 135);
+    background-color: #1565c0;
     color: white;
     margin: 0;
     padding: 5px;
@@ -35,7 +35,8 @@
       thead {
         tr {
           height: 45px;
-          background-color: rgba(39, 157, 135, 0.7);
+          background-color: #1565c0;
+          color: white;
           th {
             padding-left: 5px;
             width: 25%;
@@ -50,13 +51,27 @@
       }
       tbody {
         tr {
+          font-weight: 700;
+          font-size: large;
           height: 40px;
-          &:nth-child(even) {
-            background-color: rgba(240, 240, 240, 0.7);
+          position: relative;
+
+          p {
+            margin-bottom: 0;
+            padding-left: 10px;
           }
+
+          &:nth-child(even) {
+            background-color: rgba(100, 98, 98, 0.1);
+          }
+          // &:nth-child(7) {
+          //   background-color: rgba(236, 36, 36, 0.7);
+          // }
           td {
-            // padding-left: 5px;
+            padding-left: 35px;
             width: 25%;
+            font-weight: 400;
+            font-size: medium;
           }
         }
       }
@@ -69,6 +84,8 @@
 table,
 th,
 td {
-  border: 1px solid gray;
+  border: 1px solid rgb(0, 0, 0);
+  z-index: 2;
+  position: relative;
   border-collapse: collapse;
 }
