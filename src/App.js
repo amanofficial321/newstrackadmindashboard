@@ -21,6 +21,8 @@ import EditArticle from "./COMPONENTS/EditArticle";
 import  Categorys from "./COMPONENTS/Categorys";
 import Tags from "./COMPONENTS/Tags";
 import  Location  from "./COMPONENTS/Location";
+import RoleBasedUserList from "./COMPONENTS/RoleBasedUserList";
+import VendorRegistrationList from "./COMPONENTS/VendorRegistrationList"
 const App = () => {
   return (
     <BrowserRouter>
@@ -38,6 +40,8 @@ const App = () => {
         <Route path="/categorys" element={<Categorys />} />
         <Route path="/tags" element={<Tags />} />
         <Route path="/location" element={<Location />} />
+        <Route path="/vendorregistrationlist" element={<VendorRegistrationList />} />
+        <Route path="/rolebaseduserlist" element={<RoleBasedUserList />} />
         <Route path="/Template" element={<Template />} />
         <Route path="/Template2" element={<Template2 />} />
         <Route path="/Template3" element={<Template3 />} />

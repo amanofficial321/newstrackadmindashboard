@@ -207,7 +207,27 @@ const Navbar = () => {
           </div>
         </div>
 
-
+        <div className="dropdown dropdowns">
+          <p
+            className=" dropdown-toggle"
+            type="button"
+            id="dropdownMenuButton"
+            data-toggle="dropdown"
+            aria-haspopup="true"
+            aria-expanded="false"
+          > 
+            LISTING
+          </p>
+          <div className="dropdown-menu" aria-labelledby="dropdownMenuButton">
+            <Link to="/rolebaseduserlist">
+              {" "}
+              <p className="dropdown-item">Role Based User List</p>
+            </Link>
+            <Link to="/vendorregistrationlist">
+              <p className="dropdown-item">Vendor Registration List</p>
+            </Link>
+          </div>
+        </div>
 
 
 
