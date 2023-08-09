@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import styles from "../CSS/EditArticle.module.scss";
 import Navbar from "./Navbar";
 import { HiOutlineArrowSmallLeft } from "react-icons/hi2";
@@ -51,6 +51,15 @@ const EditArticle = () => {
   };
   ///////////////////////////////////////////////////////////////////////////////////////////////
 
+  const [category, setCategory] = useState([]);
+  useEffect(() => {
+    fetch("http://174.138.101.222:8080/getmastercategories").then((result) => {
+      result.json().then((resp) => {
+        setCategory(resp.data);
+      });
+    });
+  }, []);
+
   ///////////////////////////////// To send Update request ///////////////////////////////////////
 
   const UpdateHandeler = () => {
@@ -82,6 +91,16 @@ const EditArticle = () => {
   };
   ///////////////////////////////// To send axios request ///////////////////////////////////////
 
+  const [tags, setTags] = useState([]);
+  useEffect(() => {
+    fetch("http://174.138.101.222:8080/getmastertag").then((result) => {
+      result.json().then((resp) => {
+        setTags(resp.data);
+      });
+    });
+  }, []);
+  console.log(tags, "tags");
+
   return (
     <>
       <Navbar />
@@ -95,7 +114,8 @@ const EditArticle = () => {
 
         <FormControl className="FormControl">
           <InputLabel id="demo-simple-select-helper-label">
-            {location ? location.state.category : "Category"}
+            {/* {location ? location.state.category : "Category"} */}
+            Category
           </InputLabel>
           <Select
             labelId="demo-simple-select-helper-label"
@@ -105,8 +125,12 @@ const EditArticle = () => {
             value={values.category}
             onChange={handleInputChange}
           >
-            {categories.map((item) => {
-              return <MenuItem value={item}>{item}</MenuItem>;
+            {category.map((item) => {
+              return (
+                <MenuItem value={item.categories_Name_English}>
+                  {item.categories_Name_English}
+                </MenuItem>
+              );
             })}
           </Select>
         </FormControl>
@@ -223,7 +247,7 @@ const EditArticle = () => {
           value={values.url}
           onChange={handleInputChange}
         />
-        <TextField
+        {/* <TextField
           id="outlined-basic"
           label="Tags/Keywords"
           variant="outlined"
@@ -231,7 +255,28 @@ const EditArticle = () => {
           name="tags"
           value={values.tags}
           onChange={handleInputChange}
-        />
+        /> */}
+
+        <FormControl className="FormControl">
+          <InputLabel id="demo-simple-select-helper-label">
+            Tags/Keywords
+          </InputLabel>
+          <Select
+            labelId="demo-simple-select-helper-label"
+            id="demo-simple-select-helper"
+            name="tags"
+            label="Tags/Keywords"
+            value={values.tags}
+            onChange={handleInputChange}
+          >
+            {tags.map((item) => (
+              <MenuItem key={item._id} value={item.tag_name}>
+                {item.tag_name}
+              </MenuItem>
+            ))}
+          </Select>
+        </FormControl>
+
         <FormControl className="FormControl">
           <InputLabel id="demo-simple-select-helper-label">
             News Priority

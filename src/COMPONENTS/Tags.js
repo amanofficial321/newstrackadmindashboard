@@ -17,7 +17,7 @@ const Personalinfromation = () => {
   };
 
   const initialValues = {
-    tag_name:"",
+    tag_name: "",
   };
 
   const [values, setValues] = useState(initialValues);
@@ -40,6 +40,9 @@ const Personalinfromation = () => {
         values
       );
       alert(response.statusText);
+      setValues({
+        tag_name: "",
+      });
       // navigate("/dashboard");
       // setEmail("");
       // setPassword("");
@@ -68,7 +71,7 @@ const Personalinfromation = () => {
                   variant="standard"
                   className="personalinput"
                 />
-                  <button className="btn personalbtn" type="submit">
+                <button className="btn personalbtn" type="submit">
                   Submit
                 </button>
               </div>

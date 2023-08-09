@@ -227,6 +227,15 @@ const EpaperPreview = () => {
   };
   ///////////////////////////////// To send draft request ///////////////////////////////////////
 
+  const [categories, setCategories] = useState([]);
+  useEffect(() => {
+    fetch("http://174.138.101.222:8080/getmastercategories").then((result) => {
+      result.json().then((resp) => {
+        setCategories(resp.data);
+      });
+    });
+  }, []);
+
   return (
     <div className="home-container">
       <div
@@ -268,16 +277,17 @@ const EpaperPreview = () => {
               <Select
                 labelId="category"
                 id="category"
-                value={category}
+                value={category ? category : "Category"}
                 label="Categories"
                 onChange={(e) => {
                   setCategory(e.target.value);
+                  console.log(e.target.value);
                 }}
               >
                 {categories.map((item, index) => {
                   return (
-                    <MenuItem value={item} key={index}>
-                      {item}
+                    <MenuItem value={item.categories_Name_English} key={index}>
+                      {item.categories_Name_English}
                     </MenuItem>
                   );
                 })}

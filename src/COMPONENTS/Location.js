@@ -17,18 +17,16 @@ const Personalinfromation = () => {
   };
 
   const initialValues = {
-    countries:"",
-    states:"",
-    division:"",
-    district:"",
-    sub_division:"",
-    tahsil:"",
-    Town:"",
-    Hindi:"",
-    English:"",
-    url:"",
-   
-   
+    countries: "",
+    states: "",
+    division: "",
+    district: "",
+    sub_division: "",
+    tahsil: "",
+    Town: "",
+    Hindi: "",
+    English: "",
+    url: "",
   };
 
   const [values, setValues] = useState(initialValues);
@@ -51,6 +49,18 @@ const Personalinfromation = () => {
         values
       );
       alert(response.statusText);
+      setValues({
+        countries: "",
+        states: "",
+        division: "",
+        district: "",
+        sub_division: "",
+        tahsil: "",
+        Town: "",
+        Hindi: "",
+        English: "",
+        url: "",
+      });
       // navigate("/dashboard");
       // setEmail("");
       // setPassword("");
@@ -64,8 +74,6 @@ const Personalinfromation = () => {
   // Render different form screens based on the current step
   const renderFormScreen = () => {
     switch (step) {
-     
-     
       case 3:
         return (
           <div className="personalcontainer">
@@ -135,7 +143,6 @@ const Personalinfromation = () => {
                   variant="standard"
                   className="personalinput"
                 />
-               
               </div>
               <div className="formbox1">
                 <TextField
@@ -189,7 +196,7 @@ const Personalinfromation = () => {
               <ArrowBackIcon /> LOCATION
             </p>
           </div>
-          
+
           <form onSubmit={handleSubmit}>{renderFormScreen()}</form>
         </div>
       </div>

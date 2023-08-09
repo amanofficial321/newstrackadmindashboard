@@ -17,7 +17,7 @@ const Vendorinfromation = () => {
   const navigate = useNavigate();
 
   const goToNextStep = (e) => {
-    e.stopPropagation();
+    // e.stopPropagation();
     setStep(step + 1);
     // console.log(values);
   };
@@ -147,6 +147,7 @@ const Vendorinfromation = () => {
                   variant="standard"
                   className="vendorinput"
                   name="publisher_name"
+                  required
                   value={values.publisher_name}
                   onChange={handleInputChange}
                 />
@@ -156,6 +157,7 @@ const Vendorinfromation = () => {
                   variant="standard"
                   className="vendorinput"
                   name="email"
+                  required
                   value={values.email}
                   onChange={handleInputChange}
                 />
@@ -166,6 +168,7 @@ const Vendorinfromation = () => {
                   variant="standard"
                   className="vendorinput"
                   name="mobile"
+                  required
                   value={values.mobile}
                   onChange={handleInputChange}
                 />
@@ -173,6 +176,7 @@ const Vendorinfromation = () => {
                   id="standard-basic"
                   label="PUBLISHER BIO *"
                   variant="standard"
+                  required
                   className="vendorinput"
                   name="publisher_BIO"
                   value={values.publisher_BIO}
@@ -185,6 +189,7 @@ const Vendorinfromation = () => {
                   select
                   label="TYPE OF ENTITY"
                   name="type_of_Entity"
+                  required
                   variant="standard"
                   value={values.type_of_Entity}
                   onChange={handleInputChange}
@@ -200,6 +205,7 @@ const Vendorinfromation = () => {
                   id="standard-basic"
                   label="PASSWORD *"
                   variant="standard"
+                  required
                   className="vendorinput"
                   name="password"
                   value={values.password}
@@ -210,6 +216,7 @@ const Vendorinfromation = () => {
                   id="standard-basic"
                   label="OWNER *"
                   variant="standard"
+                  required
                   className="vendorinput"
                   name="owner_key"
                   value={values.owner_key}
@@ -219,13 +226,20 @@ const Vendorinfromation = () => {
                   id="standard-basic"
                   label="ACCOUNT MANAGER *"
                   variant="standard"
+                  required
                   className="vendorinput"
                   name="account_manager"
                   value={values.account_manager}
                   onChange={handleInputChange}
                 />
 
-                <button className=" btn vendorbtn" onClick={goToNextStep}>
+                <button
+                  onSubmit={(e) => {
+                    e.preventDefault();
+                    goToNextStep();
+                  }}
+                  className=" btn vendorbtn"
+                >
                   Next
                 </button>
               </div>

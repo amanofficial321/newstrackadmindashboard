@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import styles from "../CSS/EditArticle.module.scss";
 import Navbar from "./Navbar";
 import { HiOutlineArrowSmallLeft } from "react-icons/hi2";
@@ -14,11 +14,10 @@ import Checkbox from "@mui/material/Checkbox";
 import Button from "@mui/material/Button";
 import axios from "axios";
 import { useLocation, useNavigate } from "react-router-dom";
-import categories from "../Masters/Categories";
 
 const Addnewsarticle = () => {
   const location = useLocation();
-  console.log(location.state);
+
   const navigate = useNavigate();
 
   ///////////////////////////////// To take user input ///////////////////////////////////////
@@ -40,6 +39,8 @@ const Addnewsarticle = () => {
   };
 
   const [values, setValues] = useState(initialValues);
+
+  console.log(values);
 
   const handleInputChange = (event) => {
     const { name, value } = event.target;
@@ -75,7 +76,6 @@ const Addnewsarticle = () => {
       },
     })
       .then(async (response) => {
-        alert("Draft Edited Successfully and sent to Pending News");
         try {
           const response2 = await axios.delete(
             `http://174.138.101.222:8080/draft-article`,
@@ -83,6 +83,7 @@ const Addnewsarticle = () => {
               data: { _id: location.state._id },
             }
           );
+          alert("Draft Edited Successfully and sent to Pending News");
           navigate("/news-approval");
         } catch (error) {
           console.log(error);
@@ -94,6 +95,26 @@ const Addnewsarticle = () => {
       });
   };
   /////////////////////////////////////////////////////////////////////////////////////////
+
+  const [category, setCategory] = useState([]);
+  useEffect(() => {
+    fetch("http://174.138.101.222:8080/getmastercategories").then((result) => {
+      result.json().then((resp) => {
+        setCategory(resp.data);
+      });
+    });
+  }, []);
+  // console.log(category);
+
+  const [tags, setTags] = useState([]);
+  useEffect(() => {
+    fetch("http://174.138.101.222:8080/getmastertag").then((result) => {
+      result.json().then((resp) => {
+        setTags(resp.data);
+      });
+    });
+  }, []);
+  console.log(tags, "tags");
 
   return (
     <>
@@ -108,18 +129,24 @@ const Addnewsarticle = () => {
 
         <FormControl className="FormControl">
           <InputLabel id="demo-simple-select-helper-label">
-            {location ? location.state.category : "Category"}
+            {/* {location ? location.state.category : "Category"} */}
+            Category
           </InputLabel>
           <Select
             labelId="demo-simple-select-helper-label"
             id="demo-simple-select-helper"
             label="PLATFORM"
             name="category"
+            required
             value={values.category}
             onChange={handleInputChange}
           >
-            {categories.map((item) => {
-              return <MenuItem value={item}>{item}</MenuItem>;
+            {category.map((item) => {
+              return (
+                <MenuItem value={item.categories_Name_English}>
+                  {item.categories_Name_English}
+                </MenuItem>
+              );
             })}
           </Select>
         </FormControl>
@@ -254,15 +281,25 @@ const Addnewsarticle = () => {
           value={values.url}
           onChange={handleInputChange}
         />
-        <TextField
-          id="outlined-basic"
-          label="Tags/Keywords"
-          variant="outlined"
-          className="FormControl"
-          name="tags"
-          value={values.tags}
-          onChange={handleInputChange}
-        />
+
+        <FormControl className="FormControl">
+          <InputLabel id="demo-simple-select-helper-label">
+            Tags/Keywords
+          </InputLabel>
+          <Select
+            labelId="demo-simple-select-helper-label"
+            id="demo-simple-select-helper"
+            name="tags"
+            label="Tags/Keywords"
+            onChange={handleInputChange}
+          >
+            {tags.map((item) => (
+              <MenuItem key={item._id} value={item.tag_name}>
+                {item.tag_name}
+              </MenuItem>
+            ))}
+          </Select>
+        </FormControl>
         <FormControl className="FormControl">
           <InputLabel id="demo-simple-select-helper-label">
             News Priority

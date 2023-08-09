@@ -117,6 +117,16 @@ const Addnewsarticle = () => {
 
   /////
 
+  const [category, setCategory] = useState([]);
+  useEffect(() => {
+    fetch("http://174.138.101.222:8080/getmastercategories").then((result) => {
+      result.json().then((resp) => {
+        setCategory(resp.data);
+      });
+    });
+  }, []);
+  console.log(category);
+
   return (
     <>
       <Navbar />
@@ -129,9 +139,7 @@ const Addnewsarticle = () => {
         </h1>
 
         <FormControl className="FormControl">
-          <InputLabel id="demo-simple-select-helper-label">
-            "Category"
-          </InputLabel>
+          <InputLabel id="demo-simple-select-helper-label">Category</InputLabel>
           <Select
             labelId="demo-simple-select-helper-label"
             id="demo-simple-select-helper"
@@ -140,8 +148,12 @@ const Addnewsarticle = () => {
             value={values.category}
             onChange={handleInputChange}
           >
-            {categories.map((item) => {
-              return <MenuItem value={item}>{item}</MenuItem>;
+            {category.map((item) => {
+              return (
+                <MenuItem value={item.categories_Name_English}>
+                  {item.categories_Name_English}
+                </MenuItem>
+              );
             })}
           </Select>
         </FormControl>
@@ -231,28 +243,26 @@ const Addnewsarticle = () => {
           value={values.url}
           onChange={handleInputChange}
         />
-       
+
         <FormControl className="FormControl">
           <InputLabel id="demo-simple-select-helper-label">
             Tags/Keywords
           </InputLabel>
           <Select
-          
-          labelId="demo-simple-select-helper-label"
-          id="demo-simple-select-helper"
-          // value={age}
-          label="CATEGORY"
-          // onChange={handleChange}
-        >
-          {data?.data?.map((item) => (
-            <MenuItem key={item._id} value={item.tag_name}>
-              {item.tag_name}
-            </MenuItem>
-          ))}
-        </Select>
+            labelId="demo-simple-select-helper-label"
+            id="demo-simple-select-helper"
+            // value={age}
+            label="CATEGORY"
+            // onChange={handleChange}
+          >
+            {data?.data?.map((item) => (
+              <MenuItem key={item._id} value={item.tag_name}>
+                {item.tag_name}
+              </MenuItem>
+            ))}
+          </Select>
         </FormControl>
 
-       
         <FormControl className="FormControl">
           <InputLabel id="demo-simple-select-helper-label">
             News Priority

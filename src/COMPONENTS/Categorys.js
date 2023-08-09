@@ -20,7 +20,6 @@ const Personalinfromation = () => {
     categories_Name_Hindi: "",
     categories_Name_English: "",
     categories_Name_Url: "",
-  
   };
 
   const [values, setValues] = useState(initialValues);
@@ -31,7 +30,6 @@ const Personalinfromation = () => {
     setValues({
       ...values,
       [name]: value,
-      
     });
   };
 
@@ -44,6 +42,11 @@ const Personalinfromation = () => {
         values
       );
       alert(response.statusText);
+      setValues({
+        categories_Name_Hindi: "",
+        categories_Name_English: "",
+        categories_Name_Url: "",
+      });
       // navigate("/dashboard");
       // setEmail("");
       // setPassword("");
@@ -51,7 +54,6 @@ const Personalinfromation = () => {
       alert(error.request.responseText);
     }
   };
-
 
   // Render different form screens based on the current step
   const renderFormScreen = () => {
@@ -96,7 +98,7 @@ const Personalinfromation = () => {
             </div>
           </div>
         );
-     
+
         return null;
     }
   };
@@ -110,12 +112,10 @@ const Personalinfromation = () => {
         <div className="rolebasedbox2">
           <div className="rolebasedheader">
             <p className="rolebasedheading">
-              <ArrowBackIcon />     CATEGORY
+              <ArrowBackIcon /> CATEGORY
             </p>
           </div>
-          <div className="col-sm-12 buttongroup">
-            
-          </div>
+          <div className="col-sm-12 buttongroup"></div>
           <form onSubmit={handleSubmit}>{renderFormScreen()}</form>
         </div>
       </div>
