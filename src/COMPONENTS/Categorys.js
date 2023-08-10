@@ -6,16 +6,6 @@ import Navbar from "./Navbar";
 import axios from "axios";
 
 const Personalinfromation = () => {
-  const [step, setStep] = useState(1);
-
-  const goToNextStep = () => {
-    setStep(step + 1);
-  };
-
-  const goToPreviousStep = () => {
-    setStep(step - 1);
-  };
-
   const initialValues = {
     categories_Name_Hindi: "",
     categories_Name_English: "",
@@ -47,59 +37,8 @@ const Personalinfromation = () => {
         categories_Name_English: "",
         categories_Name_Url: "",
       });
-      // navigate("/dashboard");
-      // setEmail("");
-      // setPassword("");
     } catch (error) {
-      alert(error.request.responseText);
-    }
-  };
-
-  // Render different form screens based on the current step
-  const renderFormScreen = () => {
-    switch (step) {
-      case 1:
-        return (
-          <div className="personalcontainer">
-            <p className="personaltext">Category</p>
-            <div className="formbox">
-              <div className="formbox1">
-                <TextField
-                  id="standard-basic"
-                  label="Category Name Hindi *"
-                  name="categories_Name_Hindi"
-                  value={values.categories_Name_Hindi}
-                  onChange={handleInputChange}
-                  variant="standard"
-                  className="personalinput"
-                />
-
-                <TextField
-                  id="standard-basic"
-                  label="Category Name English  *"
-                  name="categories_Name_English"
-                  value={values.categories_Name_English}
-                  onChange={handleInputChange}
-                  variant="standard"
-                  className="personalinput"
-                />
-                <TextField
-                  id="standard-basic"
-                  label="Category Name URL *"
-                  name="categories_Name_Url"
-                  value={values.categories_Name_Url}
-                  onChange={handleInputChange}
-                  variant="standard"
-                  className="personalinput"
-                />
-
-                <button className=" btn  personalbtn">Submit</button>
-              </div>
-            </div>
-          </div>
-        );
-
-        return null;
+      alert(JSON.parse(error.request.responseText).message);
     }
   };
 
@@ -115,8 +54,58 @@ const Personalinfromation = () => {
               <ArrowBackIcon /> CATEGORY
             </p>
           </div>
-          <div className="col-sm-12 buttongroup"></div>
-          <form onSubmit={handleSubmit}>{renderFormScreen()}</form>
+          <form onSubmit={handleSubmit}>
+            <div className="personalcontainer">
+              <h1
+                style={{ fontSize: "2rem", fontFamily: "ubuntu" }}
+                className=" ms-3"
+              >
+                Create Category
+              </h1>
+              <div className="formbox ms-3" style={{ width: "50%" }}>
+                {/* <div className="formbox1"> */}
+                <TextField
+                  id="standard-basic"
+                  required
+                  label="Category Name Hindi"
+                  name="categories_Name_Hindi"
+                  value={values.categories_Name_Hindi}
+                  onChange={handleInputChange}
+                  variant="standard"
+                  className="personalinput"
+                />
+
+                <TextField
+                  id="standard-basic"
+                  required
+                  label="Category Name English"
+                  name="categories_Name_English"
+                  value={values.categories_Name_English}
+                  onChange={handleInputChange}
+                  variant="standard"
+                  className="personalinput"
+                />
+                <TextField
+                  id="standard-basic"
+                  required
+                  label="Category Name URL"
+                  name="categories_Name_Url"
+                  value={values.categories_Name_Url}
+                  onChange={handleInputChange}
+                  variant="standard"
+                  className="personalinput"
+                />
+
+                <button
+                  className=" btn  personalbtn"
+                  type="submit"
+                  style={{ marginLeft: "0" }}
+                >
+                  Submit
+                </button>
+              </div>
+            </div>
+          </form>
         </div>
       </div>
     </>

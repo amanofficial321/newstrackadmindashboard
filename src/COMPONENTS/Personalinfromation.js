@@ -58,8 +58,8 @@ const Personalinfromation = () => {
     });
   };
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
+  const handleSubmit = async () => {
+    // e.preventDefault();
 
     try {
       const response = await axios.post(
@@ -121,425 +121,467 @@ const Personalinfromation = () => {
         return (
           <div className="personalcontainer">
             <p className="personaltext">LOGIN & NAME</p>
-            <div className="formbox">
-              <div className="formbox1">
-                <TextField
-                  id="standard-basic"
-                  label="USER NAME *"
-                  name="user_name"
-                  value={values.user_name}
-                  onChange={handleInputChange}
-                  variant="standard"
-                  className="personalinput"
-                />
-                <TextField
-                  id="standard-basic"
-                  label="FIRST NAME *"
-                  name="first_name"
-                  value={values.first_name}
-                  onChange={handleInputChange}
-                  variant="standard"
-                  className="personalinput"
-                />
-                <TextField
-                  id="standard-basic"
-                  label="LAST NAME *"
-                  name="last_name"
-                  value={values.last_name}
-                  onChange={handleInputChange}
-                  variant="standard"
-                  className="personalinput"
-                />
-                <TextField
-                  id="standard-basic"
-                  label="USER ROLE *"
-                  name="user_role"
-                  value={values.user_role}
-                  onChange={handleInputChange}
-                  variant="standard"
-                  className="personalinput"
-                />
-                <TextField
-                  id="standard-basic"
-                  label="SHOW HIS NAME (BYLINE) *"
-                  name="byline"
-                  value={values.byline}
-                  onChange={handleInputChange}
-                  variant="standard"
-                  className="personalinput"
-                />
+            <form
+              onSubmit={(e) => {
+                e.preventDefault();
+                goToNextStep();
+              }}
+            >
+              <div className="formbox">
+                <div className="formbox1">
+                  <TextField
+                    id="standard-basic"
+                    label="USER NAME"
+                    required
+                    name="user_name"
+                    value={values.user_name}
+                    onChange={handleInputChange}
+                    variant="standard"
+                    className="personalinput"
+                  />
+                  <TextField
+                    id="standard-basic"
+                    label="FIRST NAME"
+                    required
+                    name="first_name"
+                    value={values.first_name}
+                    onChange={handleInputChange}
+                    variant="standard"
+                    className="personalinput"
+                  />
+                  <TextField
+                    id="standard-basic"
+                    label="LAST NAME"
+                    required
+                    name="last_name"
+                    value={values.last_name}
+                    onChange={handleInputChange}
+                    variant="standard"
+                    className="personalinput"
+                  />
+                  <TextField
+                    id="standard-basic"
+                    label="USER ROLE"
+                    required
+                    name="user_role"
+                    value={values.user_role}
+                    onChange={handleInputChange}
+                    variant="standard"
+                    className="personalinput"
+                  />
+                  <TextField
+                    id="standard-basic"
+                    label="SHOW HIS NAME (BYLINE)"
+                    name="byline"
+                    value={values.byline}
+                    onChange={handleInputChange}
+                    variant="standard"
+                    className="personalinput"
+                  />
+                </div>
+                <div className="formbox1">
+                  <TextField
+                    id="standard-basic"
+                    label="PASSWORD "
+                    required
+                    type="password"
+                    name="password"
+                    value={values.password}
+                    onChange={handleInputChange}
+                    variant="standard"
+                    className="personalinput"
+                  />
+                  <TextField
+                    id="standard-basic"
+                    label="MIDDLE NAME"
+                    name="middle_name"
+                    value={values.middle_name}
+                    onChange={handleInputChange}
+                    variant="standard"
+                    className="personalinput"
+                  />
+                  <TextField
+                    id="standard-basic"
+                    label="DEPARTMENT"
+                    required
+                    name="department"
+                    value={values.department}
+                    onChange={handleInputChange}
+                    variant="standard"
+                    className="personalinput"
+                  />
+                  <TextField
+                    id="standard-basic"
+                    label="USER SUPERIOR"
+                    name="user_superior"
+                    value={values.user_superior}
+                    onChange={handleInputChange}
+                    variant="standard"
+                    className="personalinput"
+                  />
+                  <TextField
+                    id="standard-basic"
+                    label="DISPLAY NAME"
+                    name="display_name"
+                    value={values.display_name}
+                    onChange={handleInputChange}
+                    variant="standard"
+                    className="personalinput"
+                  />
+                  <button className=" btn  personalbtn" type="submit">
+                    Next
+                  </button>
+                </div>
               </div>
-              <div className="formbox1">
-                <TextField
-                  id="standard-basic"
-                  label="PASSWORD *"
-                  name="password"
-                  value={values.password}
-                  onChange={handleInputChange}
-                  variant="standard"
-                  className="personalinput"
-                />
-                <TextField
-                  id="standard-basic"
-                  label="MIDDLE NAME *"
-                  name="middle_name"
-                  value={values.middle_name}
-                  onChange={handleInputChange}
-                  variant="standard"
-                  className="personalinput"
-                />
-                <TextField
-                  id="standard-basic"
-                  label="DEPARTMENT *"
-                  name="department"
-                  value={values.department}
-                  onChange={handleInputChange}
-                  variant="standard"
-                  className="personalinput"
-                />
-                <TextField
-                  id="standard-basic"
-                  label="USER SUPERIOR *"
-                  name="user_superior"
-                  value={values.user_superior}
-                  onChange={handleInputChange}
-                  variant="standard"
-                  className="personalinput"
-                />
-                <TextField
-                  id="standard-basic"
-                  label="DISPLAY NAME *"
-                  name="display_name"
-                  value={values.display_name}
-                  onChange={handleInputChange}
-                  variant="standard"
-                  className="personalinput"
-                />
-                <button className=" btn  personalbtn" onClick={goToNextStep}>
-                  Next
-                </button>
-              </div>
-            </div>
+            </form>
           </div>
         );
       case 2:
         return (
           <div className="personalcontainer">
             <p className="personaltext">CONTACT DETAILS</p>
-            <div className="formbox">
-              <div className="formbox1">
-                <TextField
-                  id="standard-basic"
-                  label="EMAIL 1 *"
-                  name="email_1"
-                  value={values.email_1}
-                  onChange={handleInputChange}
-                  variant="standard"
-                  className="personalinput"
-                />
-                <TextField
-                  id="standard-basic"
-                  label="EMAIL 2 *"
-                  name="email_2"
-                  value={values.email_2}
-                  onChange={handleInputChange}
-                  variant="standard"
-                  className="personalinput"
-                />
-                <TextField
-                  id="standard-basic"
-                  label="MOBILE 1 *"
-                  name="mobile_1"
-                  value={values.mobile_1}
-                  onChange={handleInputChange}
-                  variant="standard"
-                  className="personalinput"
-                />
-                <TextField
-                  id="standard-basic"
-                  label="MOBILE 2 *"
-                  name="mobile_2"
-                  value={values.mobile_2}
-                  onChange={handleInputChange}
-                  variant="standard"
-                  className="personalinput"
-                />
-                <TextField
-                  id="standard-basic"
-                  label="RESIDENCE ADDRESS*"
-                  name="address"
-                  value={values.address}
-                  onChange={handleInputChange}
-                  variant="standard"
-                  className="personalinput"
-                />
-                <TextField
-                  id="standard-basic"
-                  label="PIN CODE *"
-                  name="pin_code"
-                  value={values.pin_code}
-                  onChange={handleInputChange}
-                  variant="standard"
-                  className="personalinput"
-                />
-                <button className="btn previousbtn" onClick={goToPreviousStep}>
-                  Previous
-                </button>
+            <form
+              onSubmit={(e) => {
+                e.preventDefault();
+                goToNextStep();
+              }}
+            >
+              <div className="formbox">
+                <div className="formbox1">
+                  <TextField
+                    id="standard-basic"
+                    label="EMAIL 1"
+                    type="email"
+                    required
+                    name="email_1"
+                    value={values.email_1}
+                    onChange={handleInputChange}
+                    variant="standard"
+                    className="personalinput"
+                  />
+                  <TextField
+                    id="standard-basic"
+                    label="EMAIL 2"
+                    name="email_2"
+                    type="email"
+                    value={values.email_2}
+                    onChange={handleInputChange}
+                    variant="standard"
+                    className="personalinput"
+                  />
+                  <TextField
+                    id="standard-basic"
+                    label="MOBILE 1"
+                    required
+                    name="mobile_1"
+                    value={values.mobile_1}
+                    onChange={handleInputChange}
+                    variant="standard"
+                    className="personalinput"
+                  />
+                  <TextField
+                    id="standard-basic"
+                    label="MOBILE 2"
+                    name="mobile_2"
+                    value={values.mobile_2}
+                    onChange={handleInputChange}
+                    variant="standard"
+                    className="personalinput"
+                  />
+                  <TextField
+                    id="standard-basic"
+                    label="RESIDENCE ADDRESS"
+                    required
+                    name="address"
+                    value={values.address}
+                    onChange={handleInputChange}
+                    variant="standard"
+                    className="personalinput"
+                  />
+                  <TextField
+                    id="standard-basic"
+                    label="PIN CODE"
+                    required
+                    name="pin_code"
+                    value={values.pin_code}
+                    onChange={handleInputChange}
+                    variant="standard"
+                    className="personalinput"
+                  />
+                  <button
+                    className="btn previousbtn"
+                    onClick={goToPreviousStep}
+                  >
+                    Previous
+                  </button>
+                </div>
+                <div className="formbox1">
+                  <FormControl>
+                    <InputLabel id="demo-simple-select-helper-label">
+                      COUNTRIES
+                    </InputLabel>
+                    <Select
+                      labelId="demo-simple-select-helper-label"
+                      id="demo-simple-select-helper"
+                      // value={age}
+                      label="CATEGORY"
+                      // onChange={handleChange}
+                    >
+                      <MenuItem value="">
+                        <em>None</em>
+                      </MenuItem>
+                      {data?.data?.map((item) => (
+                        <MenuItem key={item._id} value={item.countries}>
+                          {item.countries}
+                        </MenuItem>
+                      ))}
+                    </Select>
+                  </FormControl>
+
+                  <FormControl>
+                    <InputLabel id="demo-simple-select-helper-label">
+                      STATE
+                    </InputLabel>
+                    <Select
+                      labelId="demo-simple-select-helper-label"
+                      id="demo-simple-select-helper"
+                      // value={age}
+                      label="CATEGORY"
+                      // onChange={handleChange}
+                    >
+                      <MenuItem value="">
+                        <em>None</em>
+                      </MenuItem>
+                      {data?.data?.map((item) => (
+                        <MenuItem key={item._id} value={item.states}>
+                          {item.states}
+                        </MenuItem>
+                      ))}
+                    </Select>
+                  </FormControl>
+
+                  <FormControl>
+                    <InputLabel id="demo-simple-select-helper-label">
+                      CITY
+                    </InputLabel>
+                    <Select
+                      labelId="demo-simple-select-helper-label"
+                      id="demo-simple-select-helper"
+                      // value={age}
+                      label="CATEGORY"
+                      // onChange={handleChange}
+                    >
+                      <MenuItem value="">
+                        <em>None</em>
+                      </MenuItem>
+                      {data?.data?.map((item) => (
+                        <MenuItem key={item._id} value={item.division}>
+                          {item.division}
+                        </MenuItem>
+                      ))}
+                    </Select>
+                  </FormControl>
+
+                  <FormControl>
+                    <InputLabel id="demo-simple-select-helper-label">
+                      DIVISION
+                    </InputLabel>
+                    <Select
+                      labelId="demo-simple-select-helper-label"
+                      id="demo-simple-select-helper"
+                      // value={age}
+                      label="CATEGORY"
+                      // onChange={handleChange}
+                    >
+                      <MenuItem value="">
+                        <em>None</em>
+                      </MenuItem>
+                      {data?.data?.map((item) => (
+                        <MenuItem key={item._id} value={item.district}>
+                          {item.district}
+                        </MenuItem>
+                      ))}
+                    </Select>
+                  </FormControl>
+
+                  <FormControl>
+                    <InputLabel id="demo-simple-select-helper-label">
+                      DISTRICT
+                    </InputLabel>
+                    <Select
+                      labelId="demo-simple-select-helper-label"
+                      id="demo-simple-select-helper"
+                      // value={age}
+                      label="CATEGORY"
+                      // onChange={handleChange}
+                    >
+                      <MenuItem value="">
+                        <em>None</em>
+                      </MenuItem>
+                      {data?.data?.map((item) => (
+                        <MenuItem key={item._id} value={item.sub_division}>
+                          {item.sub_division}
+                        </MenuItem>
+                      ))}
+                    </Select>
+                  </FormControl>
+
+                  <FormControl>
+                    <InputLabel id="demo-simple-select-helper-label">
+                      SUB DIVISION
+                    </InputLabel>
+                    <Select
+                      labelId="demo-simple-select-helper-label"
+                      id="demo-simple-select-helper"
+                      // value={age}
+                      label="CATEGORY"
+                      // onChange={handleChange}
+                    >
+                      <MenuItem value="">
+                        <em>None</em>
+                      </MenuItem>
+                      {data?.data?.map((item) => (
+                        <MenuItem key={item._id} value={item.tahsil}>
+                          {item.tahsil}
+                        </MenuItem>
+                      ))}
+                    </Select>
+                  </FormControl>
+
+                  <FormControl>
+                    <InputLabel id="demo-simple-select-helper-label">
+                      THASIL
+                    </InputLabel>
+                    <Select
+                      labelId="demo-simple-select-helper-label"
+                      id="demo-simple-select-helper"
+                      // value={age}
+                      label="CATEGORY"
+                      // onChange={handleChange}
+                    >
+                      <MenuItem value="">
+                        <em>None</em>
+                      </MenuItem>
+                      {data?.data?.map((item) => (
+                        <MenuItem key={item._id} value={item.tahsil}>
+                          {item.tahsil}
+                        </MenuItem>
+                      ))}
+                    </Select>
+                  </FormControl>
+
+                  <FormControl>
+                    <InputLabel id="demo-simple-select-helper-label">
+                      TOWN
+                    </InputLabel>
+                    <Select
+                      labelId="demo-simple-select-helper-label"
+                      id="demo-simple-select-helper"
+                      // value={age}
+                      label="CATEGORY"
+                      // onChange={handleChange}
+                    >
+                      <MenuItem value="">
+                        <em>None</em>
+                      </MenuItem>
+                      {data?.data?.map((item) => (
+                        <MenuItem key={item._id} value={item.Town}>
+                          {item.Town}
+                        </MenuItem>
+                      ))}
+                    </Select>
+                  </FormControl>
+
+                  <button className="btn personalbtn" type="submit">
+                    Next
+                  </button>
+                </div>
               </div>
-              <div className="formbox1">
-                <FormControl>
-                  <InputLabel id="demo-simple-select-helper-label">
-                    COUNTRIES
-                  </InputLabel>
-                  <Select
-                    labelId="demo-simple-select-helper-label"
-                    id="demo-simple-select-helper"
-                    // value={age}
-                    label="CATEGORY"
-                    // onChange={handleChange}
-                  >
-                    <MenuItem value="">
-                      <em>None</em>
-                    </MenuItem>
-                    {data?.data?.map((item) => (
-                      <MenuItem key={item._id} value={item.countries}>
-                        {item.countries}
-                      </MenuItem>
-                    ))}
-                  </Select>
-                </FormControl>
-
-                <FormControl>
-                  <InputLabel id="demo-simple-select-helper-label">
-                    STATE
-                  </InputLabel>
-                  <Select
-                    labelId="demo-simple-select-helper-label"
-                    id="demo-simple-select-helper"
-                    // value={age}
-                    label="CATEGORY"
-                    // onChange={handleChange}
-                  >
-                    <MenuItem value="">
-                      <em>None</em>
-                    </MenuItem>
-                    {data?.data?.map((item) => (
-                      <MenuItem key={item._id} value={item.states}>
-                        {item.states}
-                      </MenuItem>
-                    ))}
-                  </Select>
-                </FormControl>
-
-                <FormControl>
-                  <InputLabel id="demo-simple-select-helper-label">
-                    CITY
-                  </InputLabel>
-                  <Select
-                    labelId="demo-simple-select-helper-label"
-                    id="demo-simple-select-helper"
-                    // value={age}
-                    label="CATEGORY"
-                    // onChange={handleChange}
-                  >
-                    <MenuItem value="">
-                      <em>None</em>
-                    </MenuItem>
-                    {data?.data?.map((item) => (
-                      <MenuItem key={item._id} value={item.division}>
-                        {item.division}
-                      </MenuItem>
-                    ))}
-                  </Select>
-                </FormControl>
-
-                <FormControl>
-                  <InputLabel id="demo-simple-select-helper-label">
-                    DIVISION
-                  </InputLabel>
-                  <Select
-                    labelId="demo-simple-select-helper-label"
-                    id="demo-simple-select-helper"
-                    // value={age}
-                    label="CATEGORY"
-                    // onChange={handleChange}
-                  >
-                    <MenuItem value="">
-                      <em>None</em>
-                    </MenuItem>
-                    {data?.data?.map((item) => (
-                      <MenuItem key={item._id} value={item.district}>
-                        {item.district}
-                      </MenuItem>
-                    ))}
-                  </Select>
-                </FormControl>
-
-                <FormControl>
-                  <InputLabel id="demo-simple-select-helper-label">
-                    DISTRICT
-                  </InputLabel>
-                  <Select
-                    labelId="demo-simple-select-helper-label"
-                    id="demo-simple-select-helper"
-                    // value={age}
-                    label="CATEGORY"
-                    // onChange={handleChange}
-                  >
-                    <MenuItem value="">
-                      <em>None</em>
-                    </MenuItem>
-                    {data?.data?.map((item) => (
-                      <MenuItem key={item._id} value={item.sub_division}>
-                        {item.sub_division}
-                      </MenuItem>
-                    ))}
-                  </Select>
-                </FormControl>
-
-                <FormControl>
-                  <InputLabel id="demo-simple-select-helper-label">
-                    SUB DIVISION
-                  </InputLabel>
-                  <Select
-                    labelId="demo-simple-select-helper-label"
-                    id="demo-simple-select-helper"
-                    // value={age}
-                    label="CATEGORY"
-                    // onChange={handleChange}
-                  >
-                    <MenuItem value="">
-                      <em>None</em>
-                    </MenuItem>
-                    {data?.data?.map((item) => (
-                      <MenuItem key={item._id} value={item.tahsil}>
-                        {item.tahsil}
-                      </MenuItem>
-                    ))}
-                  </Select>
-                </FormControl>
-
-                <FormControl>
-                  <InputLabel id="demo-simple-select-helper-label">
-                    THASIL
-                  </InputLabel>
-                  <Select
-                    labelId="demo-simple-select-helper-label"
-                    id="demo-simple-select-helper"
-                    // value={age}
-                    label="CATEGORY"
-                    // onChange={handleChange}
-                  >
-                    <MenuItem value="">
-                      <em>None</em>
-                    </MenuItem>
-                    {data?.data?.map((item) => (
-                      <MenuItem key={item._id} value={item.tahsil}>
-                        {item.tahsil}
-                      </MenuItem>
-                    ))}
-                  </Select>
-                </FormControl>
-
-                <FormControl>
-                  <InputLabel id="demo-simple-select-helper-label">
-                    TOWN
-                  </InputLabel>
-                  <Select
-                    labelId="demo-simple-select-helper-label"
-                    id="demo-simple-select-helper"
-                    // value={age}
-                    label="CATEGORY"
-                    // onChange={handleChange}
-                  >
-                    <MenuItem value="">
-                      <em>None</em>
-                    </MenuItem>
-                    {data?.data?.map((item) => (
-                      <MenuItem key={item._id} value={item.Town}>
-                        {item.Town}
-                      </MenuItem>
-                    ))}
-                  </Select>
-                </FormControl>
-
-                <button className="btn personalbtn" onClick={goToNextStep}>
-                  Next
-                </button>
-              </div>
-            </div>
+            </form>
           </div>
         );
       case 3:
         return (
           <div className="personalcontainer">
             <p className="personaltext">SOCIAL & BIO</p>
-            <div className="formbox">
-              <div className="formbox1">
-                <TextField
-                  id="standard-basic"
-                  label="USER IMAGE *"
-                  name="user_image"
-                  value={values.user_image}
-                  onChange={handleInputChange}
-                  variant="standard"
-                  className="personalinput"
-                />
-                <TextField
-                  id="standard-basic"
-                  label="USER SOCIAL FB *"
-                  name="social_facebook"
-                  value={values.social_facebook}
-                  onChange={handleInputChange}
-                  variant="standard"
-                  className="personalinput"
-                />
-                <TextField
-                  id="standard-basic"
-                  label="USER SOCIAL LINKDIN   *"
-                  name="social_linkedin"
-                  value={values.social_linkedin}
-                  onChange={handleInputChange}
-                  variant="standard"
-                  className="personalinput"
-                />
-                <button className="btn previousbtn" onClick={goToPreviousStep}>
-                  Previous
-                </button>
+            <form
+              onSubmit={(e) => {
+                e.preventDefault();
+                handleSubmit();
+              }}
+            >
+              <div className="formbox">
+                <div className="formbox1">
+                  <TextField
+                    id="standard-basic"
+                    label="USER IMAGE"
+                    // required
+                    name="user_image"
+                    value={values.user_image}
+                    onChange={handleInputChange}
+                    variant="standard"
+                    className="personalinput"
+                  />
+                  <TextField
+                    id="standard-basic"
+                    label="USER SOCIAL FB"
+                    name="social_facebook"
+                    value={values.social_facebook}
+                    onChange={handleInputChange}
+                    variant="standard"
+                    className="personalinput"
+                  />
+                  <TextField
+                    id="standard-basic"
+                    label="USER SOCIAL LINKEDIN"
+                    name="social_linkedin"
+                    value={values.social_linkedin}
+                    onChange={handleInputChange}
+                    variant="standard"
+                    className="personalinput"
+                  />
+                  <button
+                    className="btn previousbtn"
+                    onClick={goToPreviousStep}
+                  >
+                    Previous
+                  </button>
+                </div>
+                <div className="formbox1">
+                  <TextField
+                    id="standard-basic"
+                    label="USER BIO"
+                    required
+                    name="user_BIO"
+                    value={values.user_BIO}
+                    onChange={handleInputChange}
+                    variant="standard"
+                    className="personalinput"
+                  />
+                  <TextField
+                    id="standard-basic"
+                    label="USER SOCIAL TWITTER"
+                    name="social_twitter"
+                    value={values.social_twitter}
+                    onChange={handleInputChange}
+                    variant="standard"
+                    className="personalinput"
+                  />
+                  <TextField
+                    id="standard-basic"
+                    label="USER SOCIAL INSTA"
+                    name="social_instagram"
+                    value={values.social_instagram}
+                    onChange={handleInputChange}
+                    variant="standard"
+                    className="personalinput"
+                  />
+                  <button className="btn personalbtn" type="submit">
+                    Submit
+                  </button>
+                </div>
               </div>
-              <div className="formbox1">
-                <TextField
-                  id="standard-basic"
-                  label="USER BIO *"
-                  name="user_BIO"
-                  value={values.user_BIO}
-                  onChange={handleInputChange}
-                  variant="standard"
-                  className="personalinput"
-                />
-                <TextField
-                  id="standard-basic"
-                  label="USER SOCIAL TWITTER*"
-                  name="social_twitter"
-                  value={values.social_twitter}
-                  onChange={handleInputChange}
-                  variant="standard"
-                  className="personalinput"
-                />
-                <TextField
-                  id="standard-basic"
-                  label="USER SOCIAL INSTA *"
-                  name="social_instagram"
-                  value={values.social_instagram}
-                  onChange={handleInputChange}
-                  variant="standard"
-                  className="personalinput"
-                />
-                <button className="btn personalbtn" type="submit">
-                  Submit
-                </button>
-              </div>
-            </div>
+            </form>
           </div>
         );
       default:
@@ -582,7 +624,7 @@ const Personalinfromation = () => {
               SOCIAL & BIO
             </button>
           </div>
-          <form onSubmit={handleSubmit}>{renderFormScreen()}</form>
+          <div>{renderFormScreen()}</div>
         </div>
       </div>
     </>
