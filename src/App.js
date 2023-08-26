@@ -8,12 +8,6 @@ import NewsApproval from "./COMPONENTS/News-Approval";
 import ViewNews from "./COMPONENTS/ViewNews";
 import Addnewsarticle from "./COMPONENTS/Addnewsarticle";
 import Epaper from "./COMPONENTS/Epaper";
-import NewspaperAgencyLogin from "./COMPONENTS/NewspaperAgencyLogin";
-import NewsAgencyAddnewsarticle from "./COMPONENTS/NewsAgencyAddnewsarticle";
-import Template from "./COMPONENTS/Template";
-import Template2 from "./COMPONENTS/Template2";
-import Template3 from "./COMPONENTS/Template3";
-import NewsAgencyNewsApproval from "./COMPONENTS/NewsAgencyNewsApproval";
 import RoleManagement from "./COMPONENTS/Role-Management";
 import EpaperPreview from "./COMPONENTS/EpaperPreview";
 import EditDraft from "./COMPONENTS/EditDraft";
@@ -23,6 +17,7 @@ import Tags from "./COMPONENTS/Tags";
 import  Location  from "./COMPONENTS/Location";
 import RoleBasedUserList from "./COMPONENTS/RoleBasedUserList";
 import VendorRegistrationList from "./COMPONENTS/VendorRegistrationList"
+import ManageVendorAdvertisementPermission from "./COMPONENTS/ManageVendorAdvertisementPermission";
 const App = () => {
   return (
     <BrowserRouter>
@@ -42,24 +37,10 @@ const App = () => {
         <Route path="/location" element={<Location />} />
         <Route path="/vendorregistrationlist" element={<VendorRegistrationList />} />
         <Route path="/rolebaseduserlist" element={<RoleBasedUserList />} />
-        <Route path="/Template" element={<Template />} />
-        <Route path="/Template2" element={<Template2 />} />
-        <Route path="/Template3" element={<Template3 />} />
         <Route path="/RoleManagement" element={<RoleManagement />} />
         <Route path="/EpaperPreview" element={<EpaperPreview />} />
-        <Route
-          path="/NewsAgencyNewsApproval"
-          element={<NewsAgencyNewsApproval />}
-        />
-
-        <Route
-          path="/NewspaperAgencyLogin"
-          element={<NewspaperAgencyLogin />}
-        />
-        <Route
-          path="/NewsAgencyAddnewsarticle"
-          element={<NewsAgencyAddnewsarticle />}
-        />
+        <Route path="ManageVendorAdvertisementPermission" element={<ManageVendorAdvertisementPermission/>}/>
+     
       </Routes>
     </BrowserRouter>
   );

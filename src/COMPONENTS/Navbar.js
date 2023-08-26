@@ -1,7 +1,6 @@
 import React from "react";
 import "../CSS/Navbar.css";
 import { Link } from "react-router-dom";
-import NewsApproval from "./News-Approval";
 const Navbar = () => {
   return (
     <>
@@ -36,32 +35,7 @@ const Navbar = () => {
           </div>
         </div>
 
-        {/* REGISTRATION DROPDOWN END  */}
 
-        {/* CONTENT MANAGEMENT DROPDOWN START  */}
-
-        {/* <div className="dropdown dropdowns">
-          <p
-            className=" dropdown-toggle"
-            type="button"
-            id="dropdownMenuButton"
-            data-toggle="dropdown"
-            aria-haspopup="true"
-            aria-expanded="false"
-          >
-            CONTENT MANAGEMENT
-          </p>
-          <div className="dropdown-menu" aria-labelledby="dropdownMenuButton">
-            <Link to={"/addNewsArticle"} className="dropdown-item">
-              ADD NEWS ARTICLE
-            </Link>
-            <a className="dropdown-item">ARTICLE LIST</a>
-            <a className="dropdown-item">VEIW NEWS</a>
-          </div>
-        </div> */}
-        {/* CONTENT MANAGEMENT DROPDOWN END  */}
-
-        {/* POST NEWS DROPDOWN START  */}
 
         <div className="dropdown dropdowns">
           <p
@@ -112,9 +86,9 @@ const Navbar = () => {
             <a className="dropdown-item" href="#">
               AD LIST
             </a>
-            <a className="dropdown-item" href="#">
-              AD SETTING
-            </a>
+            <Link className="dropdown-item" to={'/ManageVendorAdvertisementPermission'}>
+              AD SETTINGS
+            </Link>
             <a className="dropdown-item" href="#">
               AD MANAGEMENT
             </a>
@@ -215,7 +189,7 @@ const Navbar = () => {
             data-toggle="dropdown"
             aria-haspopup="true"
             aria-expanded="false"
-          > 
+          >
             LISTING
           </p>
           <div className="dropdown-menu" aria-labelledby="dropdownMenuButton">

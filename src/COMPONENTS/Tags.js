@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import TextField from "@mui/material/TextField";
 import "../CSS/Personalinformation.css";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
@@ -6,16 +6,6 @@ import Navbar from "./Navbar";
 import axios from "axios";
 
 const Personalinfromation = () => {
-  const [step, setStep] = useState(2);
-
-  const goToNextStep = () => {
-    setStep(step + 1);
-  };
-
-  const goToPreviousStep = () => {
-    setStep(step - 1);
-  };
-
   const initialValues = {
     tag_name: "",
   };
@@ -30,7 +20,7 @@ const Personalinfromation = () => {
       [name]: value,
     });
   };
-
+  const [refresh, setRefresh] = useState(0);
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -40,49 +30,24 @@ const Personalinfromation = () => {
         values
       );
       alert(response.statusText);
+      setRefresh((prev) => prev + 1);
       setValues({
         tag_name: "",
       });
-      // navigate("/dashboard");
-      // setEmail("");
-      // setPassword("");
     } catch (error) {
       alert(error.request.responseText);
     }
   };
 
-  console.log(values);
-
-  // Render different form screens based on the current step
-  const renderFormScreen = () => {
-    switch (step) {
-      case 2:
-        return (
-          <div className="personalcontainer">
-            <p className="personaltext">Tags</p>
-            <div className="formbox">
-              <div className="formbox1">
-                <TextField
-                  id="standard-basic"
-                  label="Tag Name *"
-                  name="tag_name"
-                  value={values.tag_name}
-                  onChange={handleInputChange}
-                  variant="standard"
-                  className="personalinput"
-                />
-                <button className="btn personalbtn" type="submit">
-                  Submit
-                </button>
-              </div>
-            </div>
-          </div>
-        );
-
-      default:
-        return null;
-    }
-  };
+  const [tags, setTags] = useState();
+  useEffect(() => {
+    fetch("http://174.138.101.222:8080/getmastertag").then((result) => {
+      result.json().then((resp) => {
+        setTags(resp.data);
+        console.log(" tags called");
+      });
+    });
+  }, [refresh]);
 
   return (
     <>
@@ -97,7 +62,47 @@ const Personalinfromation = () => {
             </p>
           </div>
 
-          <form onSubmit={handleSubmit}>{renderFormScreen()}</form>
+          <form onSubmit={handleSubmit}>
+            <div className="personalcontainer">
+              <div className="row">
+                <div className="formbox col-sm-12 col-md-6 ps-3 height-fit-content">
+                  <h1 style={{ fontSize: "2rem", fontFamily: "ubuntu" }}>
+                    Create Tag
+                  </h1>
+                  <TextField
+                    id="standard-basic"
+                    label="Tag Name"
+                    required
+                    name="tag_name"
+                    value={values.tag_name}
+                    onChange={handleInputChange}
+                    variant="standard"
+                    className="personalinput"
+                  />
+
+                  <button
+                    className=" btn  personalbtn"
+                    type="submit"
+                    style={{ marginLeft: "0" }}
+                  >
+                    Submit
+                  </button>
+                </div>
+                <div className=" col-sm-12 col-md-6 height-fit-content">
+                  <h1
+                    style={{ fontSize: "2rem", fontFamily: "ubuntu" }}
+                    className="text-center"
+                  >
+                    Available Tags
+                  </h1>
+                  {tags &&
+                    tags.map((item) => {
+                      return <p key={item._id}>{item.tag_name}</p>;
+                    })}
+                </div>
+              </div>
+            </div>
+          </form>
         </div>
       </div>
     </>

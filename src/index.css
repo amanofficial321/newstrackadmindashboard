@@ -26,3 +26,6 @@ html,
 .ck-editor__editable {
   font-family: "bhaskar";
 }
+.height-fit-content {
+  height: fit-content;
+}
